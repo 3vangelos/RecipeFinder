@@ -11,6 +11,8 @@
 		D3EC7EE61EC72EEF00BF768B /* RecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3EC7EE51EC72EEF00BF768B /* RecipeViewController.swift */; };
 		D3EC7EEB1EC72EEF00BF768B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3EC7EEA1EC72EEF00BF768B /* Assets.xcassets */; };
 		D3EC7EEE1EC72EEF00BF768B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3EC7EEC1EC72EEF00BF768B /* LaunchScreen.storyboard */; };
+		D3EC7EF81EC7337800BF768B /* RecipeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3EC7EF71EC7337800BF768B /* RecipeStore.swift */; };
+		D3EC7EFB1EC733F800BF768B /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3EC7EFA1EC733F800BF768B /* Recipe.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +22,8 @@
 		D3EC7EEA1EC72EEF00BF768B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D3EC7EED1EC72EEF00BF768B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D3EC7EEF1EC72EEF00BF768B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D3EC7EF71EC7337800BF768B /* RecipeStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeStore.swift; sourceTree = "<group>"; };
+		D3EC7EFA1EC733F800BF768B /* Recipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +56,8 @@
 		D3EC7EE21EC72EEF00BF768B /* RecipeFinder */ = {
 			isa = PBXGroup;
 			children = (
+				D3EC7EF91EC733E800BF768B /* Models */,
+				D3EC7EF61EC7335200BF768B /* Networking */,
 				D3EC7EF51EC72FBD00BF768B /* Controller */,
 				D3EC7EE31EC72EEF00BF768B /* AppDelegate.swift */,
 				D3EC7EEA1EC72EEF00BF768B /* Assets.xcassets */,
@@ -67,6 +73,22 @@
 				D3EC7EE51EC72EEF00BF768B /* RecipeViewController.swift */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		D3EC7EF61EC7335200BF768B /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				D3EC7EF71EC7337800BF768B /* RecipeStore.swift */,
+			);
+			name = Networking;
+			sourceTree = "<group>";
+		};
+		D3EC7EF91EC733E800BF768B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D3EC7EFA1EC733F800BF768B /* Recipe.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -142,6 +164,8 @@
 			files = (
 				D3EC7EE61EC72EEF00BF768B /* RecipeViewController.swift in Sources */,
 				D3EC7EE41EC72EEF00BF768B /* AppDelegate.swift in Sources */,
+				D3EC7EF81EC7337800BF768B /* RecipeStore.swift in Sources */,
+				D3EC7EFB1EC733F800BF768B /* Recipe.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
