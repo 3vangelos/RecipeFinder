@@ -8,15 +8,22 @@
 
 import UIKit
 
-class RecipeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class RecipeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating {
     
     private let tableView = UITableView()
+    private let searchController = UISearchController(searchResultsController: nil)
     
     init() {
         super.init(nibName: nil, bundle: nil)
         
+        searchController.searchBar.searchBarStyle = .minimal
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = false
+        
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.tableHeaderView = searchController.searchBar
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -52,6 +59,12 @@ class RecipeViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let cell = UITableViewCell()
         cell.textLabel?.text = "TEST"
         return cell
+    }
+    
+    // MARK: UISearchDelegates
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        print("Result Updates")
     }
 }
 
