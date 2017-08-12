@@ -11,7 +11,9 @@ import Foundation
 struct RecipeStore {
     
     static func requestRecipe(term: String, success:@escaping([Recipe]) -> (), errorAction: @escaping(String) -> ()) {
-        let url = URL(string: "http://www.recipepuppy.com/api/?q=omelet")!
+        let term = term.replacingOccurrences(of: " ", with: ",")
+        let urlString = "http://www.recipepuppy.com/api/?q=\(term)"
+        let url = URL(string: urlString)!
         
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Accept")

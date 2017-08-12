@@ -12,11 +12,13 @@ class RecipeViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     private let tableView = UITableView()
     private let searchController = UISearchController(searchResultsController: nil)
+    private let viewModel = RecipeViewModel()
     
     init() {
         super.init(nibName: nil, bundle: nil)
         
         searchController.searchBar.searchBarStyle = .minimal
+        searchController.searchBar.backgroundColor = UIColor.white
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
@@ -24,12 +26,6 @@ class RecipeViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableHeaderView = searchController.searchBar
-        
-        RecipeStore.requestRecipe(term: "omelet", success: { recipes in
-            print("here")
-        }) { error in
-            print("error")
-        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -54,23 +50,38 @@ class RecipeViewController: UIViewController, UITableViewDelegate, UITableViewDa
     // MARK: UITableViewDelegate & UITableViewDataSource
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
+        return 1    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return viewModel.recipes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        cell.textLabel?.text = "TEST"
+        let recipe = viewModel.recipes[indexPath.row]
+        cell.textLabel?.text = recipe.title
         return cell
     }
     
     // MARK: UISearchDelegates
     
     func updateSearchResults(for searchController: UISearchController) {
-        print("Result Updates")
+        guard let term = searchController.searchBar.text, term.characters.count > 2 else {
+            return
+        }
+        
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(requestReceipt), object: nil)
+        self.perform(#selector(requestReceipt), with: nil, afterDelay: 0.5)
+    }
+    
+    func requestReceipt() {
+        viewModel.requestRecipe(term: self.searchController.searchBar.text!, errorAction: {
+            print("Error")
+        }) {
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
     }
 }
-
