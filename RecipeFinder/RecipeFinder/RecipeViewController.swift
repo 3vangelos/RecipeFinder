@@ -66,7 +66,7 @@ class RecipeViewController: UIViewController, UITableViewDelegate, UITableViewDa
     // MARK: UISearchDelegates
     
     func updateSearchResults(for searchController: UISearchController) {
-        guard let term = searchController.searchBar.text, term.characters.count > 2 else {
+        guard let term = searchController.searchBar.text, term.characters.count > 0 else {
             return
         }
         
