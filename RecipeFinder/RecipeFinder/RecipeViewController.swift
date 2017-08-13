@@ -25,6 +25,7 @@ class RecipeViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.allowsSelection = false
         tableView.tableHeaderView = searchController.searchBar
     }
     
@@ -36,32 +37,34 @@ class RecipeViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let view = UIView()
         view.addSubview(tableView)
         
-        // Normally I would use a Library like Snapkit for setting the Autolayout constraints
-        
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo:view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo:view.trailingAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo:view.bottomAnchor).isActive = true
         self.view = view
-        self.title = "RECEIPT FINDER"
+        self.title = viewModel.screenTitle()
     }
 
+    
     // MARK: UITableViewDelegate & UITableViewDataSource
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1    }
+        return 1
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.recipes.count
+        return viewModel.numberOfRecipes()
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        let recipe = viewModel.recipes[indexPath.row]
-        cell.textLabel?.text = recipe.title
-        return cell
+        return cellForIndexPath(indexPath)
     }
+    
     
     // MARK: UISearchDelegates
     
@@ -75,13 +78,34 @@ class RecipeViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func requestReceipt() {
-        viewModel.requestRecipe(term: self.searchController.searchBar.text!, errorAction: {
-            print("Error")
-        }) {
+        viewModel.requestRecipeWithSearchTerm(self.searchController.searchBar.text!, successBlock: {
+            self.reloadRecipes()
+        }, errorBlock: { error in
+            Alerts.showNetworkError(target: self, title: "Error", description: error)
+        })
+    }
+    
+    
+    // MARK: Private Helpers
+    
+    private func reloadRecipes() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+    
+    private func cellForIndexPath(_ indexPath: IndexPath) -> RecipeTableViewCell {
+        let cell = RecipeTableViewCell()
+        cell.recipeTitleLabel.text = viewModel.recipeTitleAtIndexPath(indexPath)
+        viewModel.imageDataForIndexPath(indexPath) { data in
             
             DispatchQueue.main.async {
-                self.tableView.reloadData()
+                if let data = data {
+                    let image = UIImage(data: data)
+                    cell.recipeImageView.image = image
+                }
             }
         }
+        return cell
     }
 }
