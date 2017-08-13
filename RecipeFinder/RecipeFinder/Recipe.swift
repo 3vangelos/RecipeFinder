@@ -2,7 +2,7 @@
 //  Recipe.swift
 //  RecipeFinder
 //
-//  Created by Sismanidis, Evangelos (415) on 13.05.17.
+//  Created by Sismanidis, Evangelos on 13.05.17.
 //  Copyright © 2017 Private. All rights reserved.
 //
 
